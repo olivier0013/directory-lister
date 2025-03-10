@@ -29,7 +29,7 @@ function human_filesize( $file ) {
 $files = scandir( '.' );
 
 // files to exclude from the files array.
-$exclude = array( '.', '..', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.env', '.htaccess' );
+$exclude = array( '.', '..', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.htaccess' );
 
 // search files array and remove anything in the exclude array
 foreach ( $exclude as $ex ) {

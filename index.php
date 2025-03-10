@@ -11,8 +11,8 @@ function ext( $file ) {
 
 // function to get the title, from the url
 function title() {
-    $url = substr( $_SERVER['REQUEST_URI'], 1 );
-    if ( empty( $url ) ) $url = 'home/';
+    $url = str_replace('%20', ' ', substr( $_SERVER['REQUEST_URI'], 1 ));
+    if ( empty( $url ) ) $url = 'Accueil/';
     return $url;
 }
 
@@ -29,7 +29,7 @@ function human_filesize( $file ) {
 $files = scandir( '.' );
 
 // files to exclude from the files array.
-$exclude = array( '.', '..', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.htaccess' );
+$exclude = array( '.', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.env', '.htaccess' );
 
 // search files array and remove anything in the exclude array
 foreach ( $exclude as $ex ) {
@@ -43,6 +43,8 @@ foreach ( $exclude as $ex ) {
 
 // display a title on the top of the listing
 print "<h1>" . str_replace( '/', ' <span>/</span> ', title() ) . "</h1>";
+
+if ( empty( $url ) ) array_push($exclude, '..');
 
 // if the array of files isn't empty
 if ( !empty( $files ) ) {

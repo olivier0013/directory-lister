@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // function to get the file extension (type)
 function ext( $file ) {
     if ( is_dir( $file ) ) {
@@ -25,11 +29,12 @@ function human_filesize( $file ) {
     return sprintf( "%.{$decimals}f", $bytes / pow( 1024, $factor ) ) . @$sz[$factor - 1] . 'B';
 }
 
+// files to exclude from the files array.
+$exclude = array( '.', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.htaccess' );
+if ( title() == 'Accueil/' ) array_push($exclude, '..');
+
 // get the file list for the current directory
 $files = scandir( '.' );
-
-// files to exclude from the files array.
-$exclude = array( '.', '.DS_Store', 'index.php', '.git', '.gitmodules', '.gitignore', 'node_modules', '.env', '.htaccess' );
 
 // search files array and remove anything in the exclude array
 foreach ( $exclude as $ex ) {
@@ -43,8 +48,6 @@ foreach ( $exclude as $ex ) {
 
 // display a title on the top of the listing
 print "<h1>" . str_replace( '/', ' <span>/</span> ', title() ) . "</h1>";
-
-if ( empty( $url ) ) array_push($exclude, '..');
 
 // if the array of files isn't empty
 if ( !empty( $files ) ) {
